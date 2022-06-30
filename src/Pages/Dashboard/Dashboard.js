@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import Modal from "../Modal/Modal";
 import Rows from "../Rows/Rows";
 const Dashboard = () => {
-  const { data, refetch } = useQuery("bills", () =>
+  const { data, isLoading, refetch } = useQuery("bills", () =>
     fetch("http://localhost:5000/billing-list").then((res) => res.json())
   );
   return (
@@ -43,7 +43,12 @@ const Dashboard = () => {
             </thead>
             <tbody>
               {data?.map((bill) => (
-                <Rows bill={bill} key={bill._id} />
+                <Rows
+                  bill={bill}
+                  key={bill._id}
+                  isLoading={isLoading}
+                  refetch={refetch}
+                />
               ))}
             </tbody>
           </table>
