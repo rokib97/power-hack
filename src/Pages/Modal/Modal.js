@@ -1,14 +1,33 @@
+import { useForm } from "react-hook-form";
 const Modal = () => {
-  const handlePurchase = (event) => {
-    event.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
+  const onSubmit = (data) => {
     let bill = {
-      fullName: event.target.name.value,
-      email: event.target.email.value,
-      phone: event.target.phone.value,
-      paidAmount: event.target.amount.value,
+      fullName: data.fullname,
+      email: data.email,
+      phone: data.phone,
+      paidAmount: data.amount,
     };
-    console.log(bill);
+    // adding bill
+    fetch("http://localhost:5000/add-billing", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(bill),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+    reset();
   };
+
   return (
     <div>
       <input type="checkbox" id="bill-modal" className="modal-toggle" />
@@ -20,40 +39,124 @@ const Modal = () => {
           >
             ✕
           </label>
-          <form
-            onSubmit={handlePurchase}
-            className="grid grid-cols-1 gap-4 justify-items-center my-8"
-          >
-            <input
-              type="text"
-              name="name"
-              placeholder="Full name"
-              className="input input-bordered w-full max-w-xs"
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              className="input input-bordered w-full max-w-xs"
-            />
-            <input
-              type="number"
-              name="phone"
-              placeholder="Phone Number"
-              className="input input-bordered w-full max-w-xs"
-            />
-            <input
-              type="number"
-              name="amount"
-              placeholder="Paid Ammount"
-              className="input input-bordered w-full max-w-xs"
-            />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div class="form-control w-full max-w-xs mx-auto">
+              <input
+                type="text"
+                placeholder="Fullname"
+                {...register("fullname", {
+                  required: {
+                    value: true,
+                    message: "Fullname is required",
+                  },
+                })}
+                class="input input-bordered w-full max-w-xs"
+              />
+              <label class="label">
+                {errors?.fullname?.type === "required" && (
+                  <span class="label-text-alt text-error">
+                    {errors?.fullname?.message}
+                  </span>
+                )}
+              </label>
+            </div>
 
-            <input
-              type="submit"
-              value="Submit Data"
-              className="btn btn-success w-full max-w-xs text-white"
-            />
+            <div class="form-control w-full max-w-xs mx-auto">
+              <input
+                type="email"
+                placeholder="Email"
+                {...register("email", {
+                  required: {
+                    value: true,
+                    message: "Email is required",
+                  },
+                  pattern: {
+                    value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
+                    message: "please provide an valid email",
+                  },
+                })}
+                class="input input-bordered w-full max-w-xs"
+              />
+              <label class="label">
+                {errors?.email?.type === "required" && (
+                  <span class="label-text-alt text-error">
+                    {errors?.email?.message}
+                  </span>
+                )}
+                {errors?.email?.type === "pattern" && (
+                  <span class="label-text-alt text-error">
+                    {errors?.email?.message}
+                  </span>
+                )}
+              </label>
+            </div>
+
+            <div class="form-control w-full max-w-xs mx-auto">
+              <input
+                type="text"
+                placeholder="Phone Number"
+                {...register("phone", {
+                  required: {
+                    value: true,
+                    message: "Phone number is required",
+                  },
+                  minLength: {
+                    value: 11,
+                    message: "enter exact 11 digits",
+                  },
+                  maxLength: {
+                    value: 11,
+                    message: "enter exact 11 digits",
+                  },
+                })}
+                class="input input-bordered w-full max-w-xs"
+              />
+              <label class="label">
+                {errors?.phone?.type === "required" && (
+                  <span class="label-text-alt text-error">
+                    {errors?.phone?.message}
+                  </span>
+                )}
+                {errors?.phone?.type === "minLength" && (
+                  <span class="label-text-alt text-error">
+                    {errors?.phone?.message}
+                  </span>
+                )}
+                {errors?.phone?.type === "maxLength" && (
+                  <span class="label-text-alt text-error">
+                    {errors?.phone?.message}
+                  </span>
+                )}
+              </label>
+            </div>
+
+            <div class="form-control w-full max-w-xs mx-auto">
+              <input
+                type="number"
+                placeholder="Amount"
+                {...register("amount", {
+                  required: {
+                    value: true,
+                    message: "Amount is required",
+                  },
+                })}
+                class="input input-bordered w-full max-w-xs"
+              />
+              <label class="label">
+                {errors?.amount?.type === "required" && (
+                  <span class="label-text-alt text-error">
+                    {errors?.amount?.message}
+                  </span>
+                )}
+              </label>
+            </div>
+            <div className="w-full max-w-xs mx-auto">
+              <input
+                type="submit"
+                value="submit"
+                className="btn btn-success w-full"
+              />
+            </div>
           </form>
         </div>
       </div>
