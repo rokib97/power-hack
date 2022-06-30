@@ -1,3 +1,5 @@
+import Modal from "../Modal/Modal";
+
 const Dashboard = () => {
   return (
     <>
@@ -7,15 +9,18 @@ const Dashboard = () => {
             <label className="text-xl">Billing</label>
             <input
               type="text"
-              id="billing"
               placeholder="Search item"
               className="w-full rounded border  focus:bg-transparent text-base outline-none py-1 px-3"
             />
           </form>
           <div>
-            <button className="flex text-white bg-success border-0 py-1 px-4 focus:outline-none hover:bg-info rounded">
+            <label
+              htmlFor="bill-modal"
+              className="btn btn-sm btn-success text-white font-bold mt-2"
+            >
               Add New Bill
-            </button>
+            </label>
+            <Modal />
           </div>
         </div>
       </div>
