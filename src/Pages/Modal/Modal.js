@@ -19,8 +19,12 @@ const Modal = ({ refetch }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        refetch();
-        toast.success("Successfully Saved Data");
+        if (data) {
+          toast.success(data.message);
+          refetch();
+        } else {
+          toast.error(data.message);
+        }
       });
   };
   return (

@@ -36,29 +36,29 @@ const Form = ({ handleModal }) => {
 
       <div class="form-control w-full max-w-xs mx-auto">
         <input
-          type="email"
-          placeholder="Email"
           {...register("email", {
             required: {
               value: true,
-              message: "Email is required",
+              message: "Email is Required",
             },
             pattern: {
               value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-              message: "please provide an valid email",
+              message: "Provide a valid Email",
             },
           })}
-          class="input input-bordered w-full max-w-xs"
+          type="email"
+          placeholder="Your Email"
+          className="input input-bordered w-full max-w-xs"
         />
-        <label class="label">
-          {errors?.email?.type === "required" && (
-            <span class="label-text-alt text-error">
-              {errors?.email?.message}
+        <label className="label">
+          {errors.email?.type === "required" && (
+            <span className="label-text-alt text-red-500">
+              {errors.email.message}
             </span>
           )}
-          {errors?.email?.type === "pattern" && (
-            <span class="label-text-alt text-error">
-              {errors?.email?.message}
+          {errors.email?.type === "pattern" && (
+            <span className="label-text-alt text-red-500">
+              {errors.email.message}
             </span>
           )}
         </label>

@@ -25,10 +25,11 @@ const Rows = ({ bill, isLoading, refetch, setBill }) => {
       }
     });
   };
+
   return (
     <>
       <tr>
-        <th>{_id}</th>
+        <th>{isLoading ? "Generating Id" : _id}</th>
         <td>{fullName}</td>
         <td>{email}</td>
         <td>{phone}</td>

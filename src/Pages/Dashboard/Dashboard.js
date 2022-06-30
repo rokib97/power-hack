@@ -15,6 +15,7 @@ const Dashboard = () => {
       (res) => res.json()
     )
   );
+
   useEffect(() => {
     fetch(`http://localhost:5000/billing-listCount`)
       .then((res) => res.json())
@@ -25,6 +26,7 @@ const Dashboard = () => {
         refetch();
       });
   }, [refetch]);
+
   return (
     <>
       <div className="mb-4 py-2 px-8 overflow-x-auto bg-base-100 mt-6">
@@ -75,12 +77,13 @@ const Dashboard = () => {
         </table>
       </div>
       <div className="text-end mr-28 my-4 pagination">
-        {[...Array(pageCount).keys()].map((num) => (
+        {[...Array(pageCount).keys()].map((num, index) => (
           <button
+            key={index}
             onClick={() => setPage(num)}
             className="btn btn-sm btn-warning text-white font-bold mr-1"
           >
-            {num}
+            {num + 1}
           </button>
         ))}
       </div>
