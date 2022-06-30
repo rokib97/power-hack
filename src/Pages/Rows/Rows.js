@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-const Rows = ({ bill, isLoading, refetch }) => {
+const Rows = ({ bill, isLoading, refetch, setBill }) => {
   const { _id, email, fullName, paidAmount, phone } = bill;
   const handleDelete = (_id) => {
     Swal.fire({
@@ -35,7 +35,8 @@ const Rows = ({ bill, isLoading, refetch }) => {
         <td>{paidAmount}</td>
         <td>
           <label
-            htmlFor="bill-modal"
+            htmlFor="update-modal"
+            onClick={() => setBill(bill)}
             className="btn btn-sm btn-info text-white font-bold mr-2"
           >
             Edit
