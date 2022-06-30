@@ -29,7 +29,7 @@ const Modal = ({ refetch }) => {
       <div className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <h1 className="text-2xl font-folder text-center my-4 text-info">
-            User Billing Info
+            Add Billing Info
           </h1>
           <label
             htmlFor="bill-modal"

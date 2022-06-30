@@ -1,14 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import Modal from "../Modal/Modal";
 import UpdatedModal from "../Modal/UpdatedModal";
 import Rows from "../Rows/Rows";
+
 const Dashboard = () => {
   const [bill, setBill] = useState(null);
-  const { data, isLoading, refetch } = useQuery("bills", () =>
-    fetch("http://localhost:5000/billing-list").then((res) => res.json())
-  );
+  const [pageCount, setPageCount] = useState(0);
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(10);
 
+  const { data, isLoading, refetch } = useQuery(["bills", page, size], () =>
+    fetch(`http://localhost:5000/billing-list?page=${page}&size=${size}`).then(
+      (res) => res.json()
+    )
+  );
+  useEffect(() => {
+    fetch(`http://localhost:5000/billing-listCount`)
+      .then((res) => res.json())
+      .then((data) => {
+        const count = data.count;
+        const pages = Math.ceil(count / 10);
+        setPageCount(pages);
+        refetch();
+      });
+  }, [refetch]);
   return (
     <>
       <div className="mb-4 py-2 px-8 overflow-x-auto bg-base-100 mt-6">
@@ -33,32 +49,40 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="">
-        <div class="overflow-x-auto">
-          <table class="table w-full">
-            <thead>
-              <tr>
-                <th>Billing ID</th>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Paid Amount</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data?.map((bill) => (
-                <Rows
-                  bill={bill}
-                  key={bill._id}
-                  isLoading={isLoading}
-                  refetch={refetch}
-                  setBill={setBill}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
+      <div class="overflow-x-auto">
+        <table class="table table-compact w-full">
+          <thead>
+            <tr>
+              <th>Billing ID</th>
+              <th>Full Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Paid Amount</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data?.map((bill) => (
+              <Rows
+                bill={bill}
+                key={bill._id}
+                isLoading={isLoading}
+                refetch={refetch}
+                setBill={setBill}
+              />
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="text-end mr-28 my-4 pagination">
+        {[...Array(pageCount).keys()].map((num) => (
+          <button
+            onClick={() => setPage(num)}
+            className="btn btn-sm btn-warning text-white font-bold mr-1"
+          >
+            {num}
+          </button>
+        ))}
       </div>
     </>
   );
