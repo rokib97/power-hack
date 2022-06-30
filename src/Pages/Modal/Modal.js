@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
-const Modal = () => {
+import { toast } from "react-toastify";
+const Modal = ({ refetch }) => {
   const {
     register,
     handleSubmit,
@@ -23,7 +24,8 @@ const Modal = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        refetch();
+        toast.success("Successfully Saved Data");
       });
     reset();
   };

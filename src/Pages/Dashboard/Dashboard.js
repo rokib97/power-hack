@@ -1,6 +1,10 @@
+import { useQuery } from "react-query";
 import Modal from "../Modal/Modal";
-
+import Rows from "../Rows/Rows";
 const Dashboard = () => {
+  const { data, refetch } = useQuery("bills", () =>
+    fetch("http://localhost:5000/billing-list").then((res) => res.json())
+  );
   return (
     <>
       <div className="mb-4 py-2 px-8 overflow-x-auto bg-base-100 mt-6">
@@ -20,7 +24,7 @@ const Dashboard = () => {
             >
               Add New Bill
             </label>
-            <Modal />
+            <Modal refetch={refetch} />
           </div>
         </div>
       </div>
@@ -38,14 +42,9 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th>1</th>
-                <td>Cy Ganderton</td>
-                <td>Quality Control Specialist</td>
-                <td>Blue</td>
-                <td>Blue</td>
-                <td>Blue</td>
-              </tr>
+              {data?.map((bill) => (
+                <Rows bill={bill} key={bill._id} />
+              ))}
             </tbody>
           </table>
         </div>
