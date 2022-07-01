@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useQuery } from "react-query";
+import { RequireContext } from "../../App";
 import Modal from "../Modal/Modal";
 import UpdatedModal from "../Modal/UpdatedModal";
 import Rows from "../Rows/Rows";
 
 const Dashboard = () => {
+  const { setTotal } = useContext(RequireContext);
   const [bill, setBill] = useState(null);
   const [pageCount, setPageCount] = useState(0);
   const [page, setPage] = useState(0);
@@ -14,6 +16,9 @@ const Dashboard = () => {
     fetch(`http://localhost:5000/billing-list?page=${page}&size=${size}`).then(
       (res) => res.json()
     )
+  );
+  const { data: Allbills } = useQuery("allbills", () =>
+    fetch(`http://localhost:5000/all-bill`).then((res) => res.json())
   );
 
   useEffect(() => {
@@ -26,6 +31,14 @@ const Dashboard = () => {
         refetch();
       });
   }, [refetch]);
+  useEffect(() => {
+    const TotalPaid = Allbills?.reduce(
+      (acc, item) => acc + parseInt(item.paidAmount),
+      0
+    );
+    setTotal(TotalPaid);
+    refetch();
+  }, [Allbills, setTotal, refetch]);
 
   return (
     <>

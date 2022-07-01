@@ -4,8 +4,8 @@ import { useQuery } from "react-query";
 const useAuth = () => {
   const [auth, setAuth] = useState(false);
   const [user, setUser] = useState({});
-  const { data, refetch } = useQuery(
-    "Users",
+  const { data, isLoading, refetch } = useQuery(
+    "User",
     async () =>
       await fetch(`http://localhost:5000/users`, {
         headers: {
@@ -13,17 +13,16 @@ const useAuth = () => {
         },
       }).then((res) => res.json())
   );
-  console.log(data);
   useEffect(() => {
     if (data) {
       setAuth(true);
-      setUser(data?.name);
+      setUser(data.email);
     } else {
       setAuth(false);
     }
   }, [data]);
 
-  return { auth, refetch, user };
+  return { auth, refetch, user, isLoading };
 };
 
 export default useAuth;
