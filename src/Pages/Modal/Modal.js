@@ -13,7 +13,8 @@ const Modal = ({ refetch }) => {
     fetch("http://localhost:5000/add-billing", {
       method: "POST",
       headers: {
-        "content-type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        "Content-type": "application/json",
       },
       body: JSON.stringify(bill),
     })

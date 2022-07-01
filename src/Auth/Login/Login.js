@@ -20,7 +20,6 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result.token);
         if (result.status === 200) {
           toast.success("Login Successfully!");
           localStorage.setItem("accessToken", result.token);

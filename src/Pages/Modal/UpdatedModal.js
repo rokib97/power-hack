@@ -12,7 +12,8 @@ const UpdatedModal = ({ bill, refetch, setBill }) => {
     fetch(`http://localhost:5000/update-billing/${_id}`, {
       method: "PUT",
       headers: {
-        "content-type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        "Content-type": "application/json",
       },
       body: JSON.stringify(updatedBill),
     })

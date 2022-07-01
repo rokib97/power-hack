@@ -15,6 +15,10 @@ const Rows = ({ bill, isLoading, refetch, setBill }) => {
         const url = `http://localhost:5000/delete-billing/${_id}`;
         fetch(url, {
           method: "DELETE",
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            "Content-type": "application/json",
+          },
         })
           .then((res) => res.json())
           .then((data) => {
