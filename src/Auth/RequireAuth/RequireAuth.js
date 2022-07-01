@@ -4,14 +4,16 @@ import { RequireContext } from "../../App";
 import Loading from "../../components/Loading/Loading";
 
 const RequireAuth = ({ children }) => {
-  const { user, isLoading } = useContext(RequireContext);
+  const { isLoading } = useContext(RequireContext);
   const location = useLocation();
+  const token = localStorage.getItem("accessToken");
 
   if (isLoading) {
     return <Loading />;
   }
-  if (!user) {
-    return <Navigate to={"/login"} state={{ from: location }} replace />;
+
+  if (!token) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
   return children;
 };

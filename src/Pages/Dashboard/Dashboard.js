@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { RequireContext } from "../../App";
+import Loading from "../../components/Loading/Loading";
 import Modal from "../Modal/Modal";
 import UpdatedModal from "../Modal/UpdatedModal";
 import Rows from "../Rows/Rows";
@@ -42,6 +43,9 @@ const Dashboard = () => {
     refetch();
   }, [Allbills, setTotal, refetch]);
 
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <>
       <div className="mb-4 py-2 px-8 overflow-x-auto bg-base-100 mt-6">
