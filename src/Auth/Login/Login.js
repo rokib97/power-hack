@@ -1,16 +1,34 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+import { toast } from "react-toastify";
 const Login = () => {
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm();
   const handleOnClick = async (data) => {
-    const user = {
-      email: data.email,
-      pass: data.password,
-    };
+    fetch("http://localhost:5000/login", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.status === 200) {
+          toast.success("Login Successfully!");
+          navigate("/");
+          reset();
+        } else {
+          toast.error("Email or password doesn't match!");
+          reset();
+        }
+      });
   };
   return (
     <div>

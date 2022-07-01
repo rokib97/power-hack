@@ -1,17 +1,34 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const Registration = () => {
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm();
   const onSubmit = async (data) => {
-    const user = {
-      name: data.name,
-      email: data.email,
-      pass: data.password,
-    };
+    console.log(data);
+    fetch("http://localhost:5000/registration", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.status === 401) {
+          toast.error("Email Already in used");
+          reset();
+        } else {
+          toast.success("Registration Successful!");
+          navigate("/");
+          reset();
+        }
+      });
   };
   return (
     <div className="flex mt-12 w-full mx-auto justify-center items-center">
