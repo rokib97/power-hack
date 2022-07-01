@@ -15,17 +15,17 @@ const Dashboard = () => {
 
   const { data, isLoading, refetch } = useQuery(["bills", page, size], () =>
     fetch(
-      `https://conservative-marks-69957.herokuapp.com/billing-list?page=${page}&size=${size}`
+      `https://bearded-goose-44851.herokuapp.com/billing-list?page=${page}&size=${size}`
     ).then((res) => res.json())
   );
   const { data: Allbills } = useQuery("allbills", () =>
-    fetch(`https://conservative-marks-69957.herokuapp.com/all-bill`).then(
-      (res) => res.json()
+    fetch(`https://bearded-goose-44851.herokuapp.com/all-bill`).then((res) =>
+      res.json()
     )
   );
 
   useEffect(() => {
-    fetch(`https://conservative-marks-69957.herokuapp.com/billing-listCount`)
+    fetch(`https://bearded-goose-44851.herokuapp.com/billing-listCount`)
       .then((res) => res.json())
       .then((data) => {
         const count = data.count;

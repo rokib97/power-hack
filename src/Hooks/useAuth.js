@@ -7,7 +7,7 @@ const useAuth = () => {
   const { data, isLoading, refetch } = useQuery(
     "User",
     async () =>
-      await fetch(`https://conservative-marks-69957.herokuapp.com/users`, {
+      await fetch(`https://bearded-goose-44851.herokuapp.com/users`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },

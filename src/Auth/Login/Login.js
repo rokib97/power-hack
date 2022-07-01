@@ -11,7 +11,7 @@ const Login = () => {
     reset,
   } = useForm();
   const handleOnClick = async (data) => {
-    fetch("https://conservative-marks-69957.herokuapp.com/login", {
+    fetch("https://bearded-goose-44851.herokuapp.com/login", {
       method: "POST",
       headers: {
         "content-type": "application/json",

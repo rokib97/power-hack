@@ -9,17 +9,14 @@ const UpdatedModal = ({ bill, refetch, setBill }) => {
       phone: data.phone,
       paidAmount: data.amount,
     };
-    fetch(
-      `https://conservative-marks-69957.herokuapp.com/update-billing/${_id}`,
-      {
-        method: "PUT",
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(updatedBill),
-      }
-    )
+    fetch(`https://bearded-goose-44851.herokuapp.com/update-billing/${_id}`, {
+      method: "PUT",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(updatedBill),
+    })
       .then((res) => res.json())
       .then((data) => {
         refetch();
