@@ -25,6 +25,7 @@ const Registration = () => {
           reset();
         } else {
           toast.success("Registration Successful!");
+          localStorage.setItem("accessToken", result.token);
           navigate("/");
           reset();
         }

@@ -25,6 +25,7 @@ const Modal = ({ refetch }) => {
           refetch();
         } else {
           toast.error(data.message);
+          refetch();
         }
       });
   };
