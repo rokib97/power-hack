@@ -11,7 +11,7 @@ const Registration = () => {
   } = useForm();
   const onSubmit = async (data) => {
     console.log(data);
-    fetch("http://localhost:5000/registration", {
+    fetch("https://conservative-marks-69957.herokuapp.com/registration", {
       method: "POST",
       headers: {
         "content-type": "application/json",

@@ -10,7 +10,7 @@ const Modal = ({ refetch }) => {
       paidAmount: data.amount,
     };
     // adding bill
-    fetch("http://localhost:5000/add-billing", {
+    fetch("https://conservative-marks-69957.herokuapp.com/add-billing", {
       method: "POST",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,

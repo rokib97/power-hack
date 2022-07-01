@@ -13,7 +13,7 @@ export const RequireContext = createContext(null);
 function App() {
   const { auth, refetch, user } = useAuth();
   const [Total, setTotal] = useState(0);
-  console.log(Total);
+
   return (
     <>
       <ToastContainer />

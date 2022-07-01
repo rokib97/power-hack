@@ -13,16 +13,18 @@ const Dashboard = () => {
   const [size, setSize] = useState(10);
 
   const { data, isLoading, refetch } = useQuery(["bills", page, size], () =>
-    fetch(`http://localhost:5000/billing-list?page=${page}&size=${size}`).then(
+    fetch(
+      `https://conservative-marks-69957.herokuapp.com/billing-list?page=${page}&size=${size}`
+    ).then((res) => res.json())
+  );
+  const { data: Allbills } = useQuery("allbills", () =>
+    fetch(`https://conservative-marks-69957.herokuapp.com/all-bill`).then(
       (res) => res.json()
     )
   );
-  const { data: Allbills } = useQuery("allbills", () =>
-    fetch(`http://localhost:5000/all-bill`).then((res) => res.json())
-  );
 
   useEffect(() => {
-    fetch(`http://localhost:5000/billing-listCount`)
+    fetch(`https://conservative-marks-69957.herokuapp.com/billing-listCount`)
       .then((res) => res.json())
       .then((data) => {
         const count = data.count;

@@ -12,9 +12,11 @@ const Header = () => {
       </div>
       <div class="flex-none">
         <ul class="menu menu-horizontal p-0">
-          <li className="mr-1">
-            <p className="font-bold">Paid Total: {Total}</p>
-          </li>
+          {auth && (
+            <li className="mr-1">
+              <p className="font-bold">Paid Total: {Total}</p>
+            </li>
+          )}
           {auth ? (
             <li className="mr-1">
               <Link to="/login" className="font-bold">

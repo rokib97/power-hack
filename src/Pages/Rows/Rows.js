@@ -12,7 +12,7 @@ const Rows = ({ bill, isLoading, refetch, setBill }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        const url = `http://localhost:5000/delete-billing/${_id}`;
+        const url = `https://conservative-marks-69957.herokuapp.com/delete-billing/${_id}`;
         fetch(url, {
           method: "DELETE",
           headers: {
