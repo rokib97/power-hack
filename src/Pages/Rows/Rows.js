@@ -33,7 +33,7 @@ const Rows = ({ bill, isLoading, refetch, setBill }) => {
   return (
     <>
       <tr>
-        <th>{isLoading ? "Generating Id" : _id}</th>
+        <th>{_id || "Generating Id"}</th>
         <td>{fullName}</td>
         <td>{email}</td>
         <td>{phone}</td>
